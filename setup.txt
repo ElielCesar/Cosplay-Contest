@@ -1,0 +1,8 @@
+ python -m venv xvenv 
+ pip3 install django pytest_django pillow
+ django-admin startproject projeto_core .   
+ django-admin startapp fantasy  
+ django-admin startapp makeyourself 
+ python .\manage.py makemigrations 
+ python .\manage.py migrate 
+ python .\manage.py createsuperuser
