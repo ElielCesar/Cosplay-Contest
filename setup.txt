@@ -1,4 +1,5 @@
  python -m venv xvenv 
+ entre no ambiente virtual antes de executar os demais passos
  pip3 install django pytest_django pillow
  django-admin startproject projeto_core .   
  django-admin startapp fantasy  
