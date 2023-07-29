@@ -1,9 +1,8 @@
  python -m venv xvenv 
- entre no ambiente virtual antes de executar os demais passos
- pip3 install django pytest_django pillow
- django-admin startproject projeto_core .   
- django-admin startapp fantasy  
- django-admin startapp makeyourself 
+ entre no ambiente virtual antes de executar os demais passos: pip install -U -r .\requirements.txt
+ 
  python .\manage.py makemigrations 
  python .\manage.py migrate 
  python .\manage.py createsuperuser
+
+ # quando for trabalhar com urls, descomente as linhas do urls.py
