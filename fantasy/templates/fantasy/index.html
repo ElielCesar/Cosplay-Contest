@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -19,15 +20,17 @@
     </header>
 
     <main>
-        <section id="participantes" class="container bg-light">
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+        <section class="container bg-light d-flex align-content-between">
+            {% for p in participantes %}
+                <div class="card mx-2" style="width: 16rem;">
+                    <img src="media\{{p.imagem}}" class="card-img-top" style="height: 300px;" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{p.nome}}</h5>
+                        <p class="card-text">{{p.personagem}}</p>
+                        <a href="#" class="btn btn-primary">Avaliar</a>
+                    </div>
                 </div>
-              </div>
+            {% endfor %}
         </section>
 
     </main>
