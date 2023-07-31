@@ -35,7 +35,7 @@ class Julgamento(models.Model):
     nota_final = models.IntegerField(validators=[MaxValueValidator(40), MinValueValidator(4)], blank=True, null=True)
     observacao = models.CharField(max_length=300, blank=True, null=True)
 
-    # acrescentar imagem do candidato no Django Admin
+    # falta implementar a soma das notas
 
 
 
