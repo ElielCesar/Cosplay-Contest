@@ -12,6 +12,7 @@
 </head>
 <body>
     <header>
+        <!--
         <section>
             <div class="row container-fluid align-content-between justify-content-around">
                 <img src="{% static '/img/naruto.jpg' %}" style="width: 150px; height: 150px;">
@@ -23,10 +24,10 @@
                 <img src="{% static '/img/sakura.jpg' %}" style="width: 150px; height: 150px;">
                 <img src="{% static '/img/saber.jpg' %}" style="width: 150px; height: 150px;">
             </div>
-        </section>
+        </section>-->
         <section>
             <div class="container-fluid bg-primary text-center">
-                <h1 class="text-white py-5">Participantes da categoria Fantasy</h1>
+                <h1 class="text-white py-3">Julgamento</h1>
                 <p><a href="{% url 'candidatos' %}" class="text-white fw-bold">Voltar</a></p>
             </div>
         </section>
@@ -36,7 +37,7 @@
         <section class="container bg-light">
             <div class="row pb-5">
                 <div class="col-5 text-center">
-                    <img class="rounded shadow" src="/fantasy{{participante.imagem.url}}" style="width: 75%;">
+                    <img class="rounded shadow" src="/fantasy{{participante.imagem.url}}" style="width: 70%;">
                     <h3>Nome: {{participante.nome}}</h3>
                     <h3>Personagem: {{participante.personagem}}</h3>
                     
@@ -45,7 +46,7 @@
                     <form action="" method="post" autocomplete="off">
                         {% csrf_token %}
                         {{ form }}
-                        <input type="submit" class="btn btn-primary w-100" value="Salvar">
+                        <input type="submit" class="btn btn-primary w-100 mt-3" value="Salvar">
                     </form>
                 </div>
             </div>
