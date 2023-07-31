@@ -33,17 +33,14 @@
 
     <main>
         <section class="container bg-light">
-            <div class="row justify-content-between">
-                {% for p in participantes %}
-                    <div class="card mx-2 my-2" style="width: 16rem;">
-                        <img src="media\{{p.imagem}}" class="card-img-top" style="height: 300px;" >
-                        <div class="card-body">
-                            <h5 class="card-title">{{p.nome}}</h5>
-                            <p class="card-text">{{p.personagem}}</p>
-                            <a href="{% url 'julgamento' %}" class="btn btn-primary">Avaliar</a>
-                        </div>
-                    </div>
-                {% endfor %}
+            <div class="row pb-5">
+                <div class="col-6">aqui vai vir dados do candidato</div>
+                <div class="col-6">
+                    <form action="" method="post" autocomplete="off">
+                        {% csrf_token %}
+                        {{ form }}
+                    </form>
+                </div>
             </div>
             
         </section>

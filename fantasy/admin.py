@@ -9,3 +9,17 @@ class ParticipanteAdmin(admin.ModelAdmin):
     ordering = ('nome',)
 
 admin.site.register(Participante, ParticipanteAdmin)
+
+class JuradoAdmin(admin.ModelAdmin):
+    list_display = ['nome']
+    ordering = ('nome',)
+    search_fields = ('nome',)
+
+admin.site.register(Jurado, JuradoAdmin)
+
+
+class JulgamentoAdmin(admin.ModelAdmin):
+    list_display = ['participante', 'jurado', 'nota_estetica', 'nota_criatividade', 'nota_performance', 'nota_final', 'observacao']
+    ordering = ('nota_final',)
+
+admin.site.register(Julgamento, JulgamentoAdmin)
