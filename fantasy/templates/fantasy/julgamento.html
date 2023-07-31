@@ -27,6 +27,7 @@
         <section>
             <div class="container-fluid bg-primary text-center">
                 <h1 class="text-white py-5">Participantes da categoria Fantasy</h1>
+                <p><a href="{% url 'candidatos' %}" class="text-white fw-bold">Voltar</a></p>
             </div>
         </section>
     </header>
@@ -34,11 +35,17 @@
     <main>
         <section class="container bg-light">
             <div class="row pb-5">
-                <div class="col-6">aqui vai vir dados do candidato</div>
+                <div class="col-5 text-center">
+                    <img class="rounded shadow" src="/fantasy{{participante.imagem.url}}" style="width: 75%;">
+                    <h3>Nome: {{participante.nome}}</h3>
+                    <h3>Personagem: {{participante.personagem}}</h3>
+                    
+                </div>
                 <div class="col-6">
                     <form action="" method="post" autocomplete="off">
                         {% csrf_token %}
                         {{ form }}
+                        <input type="submit" class="btn btn-primary w-100" value="Salvar">
                     </form>
                 </div>
             </div>

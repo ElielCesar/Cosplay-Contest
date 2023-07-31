@@ -9,12 +9,12 @@ class Form_Julgamento(forms.ModelForm):
         fields = ['participante', 'jurado', 'nota_estetica', 'nota_criatividade', 'nota_performance', 'observacao']
 
         widgets = {
-            'participante': Select(attrs={'class': 'form-control'}),
-            'jurado': Select(attrs={'class': 'form-control'}),
-            'nota_estetica': forms.TextInput(attrs={'class': 'form-control'}),
-            'nota_criatividade': forms.TextInput(attrs={'class': 'form-control'}),
-            'nota_performance': forms.TextInput(attrs={'class': 'form-control'}),
-            'observacao': forms.TextInput(attrs={'class': 'form-control'}),
+            'participante': Select(attrs={'class': 'form-control mb-2'}),
+            'jurado': Select(attrs={'class': 'form-control mb-2'}),
+            'nota_estetica': forms.NumberInput(attrs={'class': 'form-control mb-2'}),
+            'nota_criatividade': forms.NumberInput(attrs={'class': 'form-control mb-2'}),
+            'nota_performance': forms.NumberInput(attrs={'class': 'form-control mb-2'}),
+            'observacao': forms.TextInput(attrs={'class': 'form-control mb-2'}),
         }
     
 
