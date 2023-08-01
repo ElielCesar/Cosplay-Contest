@@ -20,6 +20,6 @@ admin.site.register(Jurado, JuradoAdmin)
 
 class JulgamentoAdmin(admin.ModelAdmin):
     list_display = ['participante', 'jurado', 'nota_estetica', 'nota_criatividade', 'nota_performance', 'nota_final', 'observacao']
-    ordering = ('nota_final',)
+    ordering = ('participante', 'jurado')
 
 admin.site.register(Julgamento, JulgamentoAdmin)

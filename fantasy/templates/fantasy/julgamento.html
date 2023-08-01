@@ -43,10 +43,10 @@
                     
                 </div>
                 <div class="col-6">
-                    <form action="" method="post" autocomplete="off">
+                    <form action="{% url 'julgamento_post' %}" method="post" autocomplete="off">
                         {% csrf_token %}
                         {{ form }}
-                        <input type="submit" class="btn btn-primary w-100 mt-3" value="Salvar">
+                        <input type="submit" class="btn btn-primary w-100 mt-3" id="salvar" value="Salvar">
                     </form>
                 </div>
             </div>

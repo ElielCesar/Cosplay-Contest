@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.safestring import mark_safe
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 
 # Create your models here.
 class Participante(models.Model):
@@ -35,9 +37,12 @@ class Julgamento(models.Model):
     nota_final = models.IntegerField(validators=[MaxValueValidator(40), MinValueValidator(4)], blank=True, null=True)
     observacao = models.CharField(max_length=300, blank=True, null=True)
 
-    # falta implementar a soma das notas
 
-
+@receiver(post_save, sender=Julgamento)
+def somar_notas(sender, instance, created, **kwargs):
+    if created:
+        instance.nota_final = instance.nota_estetica + instance.nota_criatividade + instance.nota_performance
+        instance.save(update_fields=['nota_final'])
 
 
 

@@ -26,7 +26,8 @@
         </section>
         <section>
             <div class="container-fluid bg-primary text-center">
-                <h1 class="text-white py-5">Participantes da categoria Fantasy</h1>
+                <h1 class="text-white py-3">Participantes da categoria Fantasy</h1>
+                <a href="{%url 'relatorio'%}" class="text-white fw-bold">Relatório</a>
             </div>
         </section>
     </header>
@@ -40,7 +41,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{p.nome}}</h5>
                             <p class="card-text">{{p.personagem}}</p>
-                            <a href="{% url 'julgamento' p.id %}" class="btn btn-primary w-100">Avaliar</a>
+                            <a href="{% url 'julgamento_get' p.id %}" class="btn btn-primary w-100">Avaliar</a>
                         </div>
                     </div>
                 {% endfor %}

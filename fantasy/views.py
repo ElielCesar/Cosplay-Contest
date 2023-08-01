@@ -1,6 +1,7 @@
-from django.shortcuts import render
-from .models import Participante
+from django.shortcuts import render, redirect
+from .models import Participante, Julgamento
 from .forms import Form_Julgamento
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -8,12 +9,26 @@ def candidatos(request):
     participantes = Participante.objects.all()
     return render(request, 'fantasy/index.html', {'participantes': participantes})
 
-def julgamento(request, id):
+
+def julgamento_get(request, id):
     if request.method == 'GET':
         participante = Participante.objects.get(id=id)
         form = Form_Julgamento()
         return render(request, 'fantasy/julgamento.html',{'form': form, 'participante': participante})
 
-    else:
-        # falta terminar o post
-        return render(request, 'fantasy/julgamento.html')
+
+def julgamento_post(request):
+    if request.method == 'POST':
+        form = Form_Julgamento(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('candidatos')
+        
+
+def relatorio(request):
+    part_nota_final = Participante.objects.annotate(soma_notas=Sum('julgamento__nota_final')).order_by('-soma_notas')
+    julgamento = Julgamento.objects.all()
+    return render(request, 'fantasy/relatorio.html', {'part_nota_final':part_nota_final, 'julgamento':julgamento})
+
+
+
