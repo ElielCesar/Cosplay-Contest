@@ -3,6 +3,8 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from . import views
 
+app_name = 'fantasy'
+
 urlpatterns = [
     path('', views.candidatos, name='candidatos' ),
     path('julgamento/<int:id>', views.julgamento_get, name='julgamento_get'),

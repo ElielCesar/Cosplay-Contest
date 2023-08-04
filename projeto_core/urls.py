@@ -5,7 +5,7 @@ urlpatterns = [
     path('', include('fantasy.urls')),
     path('admin/', admin.site.urls),
     path('fantasy/', include('fantasy.urls')),
-    #path('makeyourself/', include('makeyourself.urls')),
+    path('makeyourself/', include('makeyourself.urls')),
 ]
 
 admin.site.site_header = 'Cosplay Contest'  

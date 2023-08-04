@@ -13,7 +13,7 @@ def candidatos(request):
 def julgamento_get(request, id):
     if request.method == 'GET':
         participante = Participante.objects.get(id=id)
-        form = Form_Julgamento()
+        form = Form_Julgamento(initial={'participante': id})
         return render(request, 'fantasy/julgamento.html',{'form': form, 'participante': participante})
 
 

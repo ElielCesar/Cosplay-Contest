@@ -28,7 +28,7 @@
         <section>
             <div class="container-fluid bg-primary text-center">
                 <h1 class="text-white py-3">Julgamento</h1>
-                <p><a href="{% url 'candidatos' %}" class="text-white fw-bold">Voltar</a></p>
+                <p><a href="{% url 'fantasy:candidatos' %}" class="text-white fw-bold">Voltar</a></p>
             </div>
         </section>
     </header>
@@ -43,7 +43,7 @@
                     
                 </div>
                 <div class="col-6">
-                    <form action="{% url 'julgamento_post' %}" method="post" autocomplete="off">
+                    <form action="{% url 'fantasy:julgamento_post' %}" method="post" autocomplete="off">
                         {% csrf_token %}
                         {{ form }}
                         <input type="submit" class="btn btn-primary w-100 mt-3" id="salvar" value="Salvar">
