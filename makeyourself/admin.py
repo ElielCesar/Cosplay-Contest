@@ -2,19 +2,20 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import Participante, Jurado, Julgamento
+from .models import *
 
 
 # Register your models here.
 class ParticipanteAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'personagem', 'email', 'telefone']
+    list_display = ['nome', 'personagem', 'email', 'telefone', 'imagem']
     search_fields = ('nome',)
     ordering = ('nome',)
 
 admin.site.register(Participante, ParticipanteAdmin)
 
+
 class JuradoAdmin(admin.ModelAdmin):
-    list_display = ['nome']
+    list_display = ['nome', 'email', 'telefone']
     ordering = ('nome',)
     search_fields = ('nome',)
 

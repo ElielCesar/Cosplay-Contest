@@ -4,25 +4,26 @@ from django.utils.safestring import mark_safe
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
-# Create your models here.
-class Participante(models.Model):
+# classe abstrata - campos comuns devem sem implementados aqui
+class Pessoa(models.Model):
+    class Meta:
+        abstract = True
+
     nome = models.CharField(max_length=200, blank=False, null=False)
-    personagem = models.CharField(max_length=200, blank=False, null=False)
     email = models.EmailField()
     telefone = models.CharField(max_length=50, blank=False, null=False)
-    imagem = models.ImageField(upload_to='fantasy/')
-
 
     def __str__(self):
         return self.nome
+
+
+class Participante(Pessoa):
     
-    class Meta:
-        verbose_name = 'Participante'
-        verbose_name_plural = 'Participantes'
+    personagem = models.CharField(max_length=200, blank=False, null=False)
+    imagem = models.ImageField(upload_to='fantasy/')
 
 
-class Jurado(models.Model):
-    nome = models.CharField(max_length=200, blank=False, null=False)
+class Jurado(Pessoa):
 
     def __str__(self):
         return self.nome

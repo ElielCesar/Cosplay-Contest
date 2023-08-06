@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Participante, Jurado, Julgamento
+from .models import *
 
 
 # Register your models here.
@@ -11,7 +11,7 @@ class ParticipanteAdmin(admin.ModelAdmin):
 admin.site.register(Participante, ParticipanteAdmin)
 
 class JuradoAdmin(admin.ModelAdmin):
-    list_display = ['nome']
+    list_display = ['nome', 'email', 'telefone']
     ordering = ('nome',)
     search_fields = ('nome',)
 
