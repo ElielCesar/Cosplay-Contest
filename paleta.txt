@@ -1,0 +1,16 @@
+Hex codes: 
+dark indigo #2C2C54,
+deep purple-gray #474787,
+cool gray #AAABB8,
+light gray #ECECEC
+
+https://colorhunt.co/palette/2b3499ff6c22ff9209ffd099
+#2B3499
+#FF6C22
+#FF9209
+#FFD099
+
+vou usar essa
+https://colorhunt.co/palette/211951836fff15f5baf0f3ff
+#271c6efb;
+#211951;

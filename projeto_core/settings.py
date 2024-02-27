@@ -1,6 +1,7 @@
 
 import os
 from pathlib import Path
+from django.contrib.messages import constants
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,8 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'fantasy',
-    'makeyourself',
+    'autenticacao',
+    'central',
 ]
 
 MIDDLEWARE = [
@@ -42,8 +43,14 @@ ROOT_URLCONF = 'projeto_core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            # os.path.join(BASE_DIR, 'autenticacao', 'templates'),
+            # os.path.join(BASE_DIR, 'central', 'templates'),
+            # os.path.join(BASE_DIR, 'fantasy', 'templates'),
+            # os.path.join(BASE_DIR, 'makeyourself', 'templates'),
+            ],
+        'APP_DIRS': True, # isso já configura que cada app terá sua pasta templates
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -93,3 +100,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, STATIC_URL)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MESSAGE_TAGS = {
+    constants.DEBUG: 'alert-primary',
+    constants.ERROR: 'alert-danger',
+    constants.SUCCESS: 'alert-success',
+    constants.INFO: 'alert-info',
+    constants.WARNING: 'alert-warning',
+    }
