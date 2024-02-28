@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <div class="ms-5 mx-5 bg-light rounded my-5">
+        <div class="text-center py-4">
+            <h2>Tem certeza que deseja exluir esse apoiador ?</h2>
+            <form action="{% url 'central:deletar_apoiador' apoiador.pk %}" method="post">
+                {% csrf_token %}
+                <p>Nome: {{apoiador.nome_completo}}</p>
+                <p>Email: {{apoiador.email }}</p>
+                <input type="submit" class="btn btn-danger" value="Sim, excluir">
+                <a href="{% url 'central:listar_apoiadores' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

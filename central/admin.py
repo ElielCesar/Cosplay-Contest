@@ -11,7 +11,7 @@ class Makeyourself_Admin(admin.ModelAdmin):
 
 
 class Jurado_Admin(admin.ModelAdmin):
-     list_display = ('usuario','nome_completo', 'email', 'telefone', 'foto')
+     list_display = ('nome_completo', 'email', 'telefone', 'foto')
      
      
 class Organizadores_Admin(admin.ModelAdmin):

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+<div class="container ms-5">
+    <p class="fs-3 text-white">Insira os dados do Jurado</p>
+    <hr class="text-white w-75">
+    <div class="mt-5 text-white w-75 rounded">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary w-100 my-3">
+            {% if form.instance.pk %}
+                Atualizar
+            {% else %}
+                Salvar
+            {% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+    
+{% endblock %}

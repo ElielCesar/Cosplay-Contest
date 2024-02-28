@@ -26,7 +26,7 @@ class Makeyourself_ModelForm(forms.ModelForm):
         }
 
 
-class Jurado_ModelForm(forms.ModelForm):
+class Jurados_ModelForm(forms.ModelForm):
     class Meta:
         model = Jurado
         fields = ['nome_completo', 'email', 'telefone', 'foto']
