@@ -5,11 +5,24 @@ from .views import *
 
 app_name = 'central'
 urlpatterns = [
-    path('', home, name='home'),
-    path('inscrever/', inscrever, name='inscrever'),
-    path('inscrever_fantasy/', inscrever_fantasy, name='inscrever_fantasy'),
-    path('inscrever_makeyourself/', inscrever_makeyourself, name='inscrever_makeyourself'),
-    path('buscar_inscritos/', buscar_inscritos, name='buscar_inscritos'),
+    path('', HomeView.as_view(), name='home'),
+    path('inscrever/', InscreverView.as_view(), name='inscrever'),
+    
+    # urls para CBV Fantasy
+    path('inscritos_fantasy/', InscritosFantasyView.as_view(), name='inscritos_fantasy'),
+    path('inscrever_fantasy/', InscreverFantasyView.as_view(), name='inscrever_fantasy'),
+    path('deletar_fantasy/<int:pk>/',DeletarFantasyView.as_view() ,name='deletar_fantasy'),
+    
+    # urls para CBV Fantasy
+    path('inscritos_makeyourself/', InscritosMakeYourSelfView.as_view(), name='inscritos_makeyourself'),
+    path('inscrever_makeyourself/', InscreverMakeYourSelfView.as_view(), name='inscrever_makeyourself'),
+    path('deletar_makeyourself/<int:pk>/',DeletarMakeYourSelfView.as_view() ,name='deletar_makeyourself'),
+    
+    # urls para Julgamento
+    path('julgamento/', JulgamentoView.as_view(), name='julgamento'),
+    path('julgamento_fantasy/<int:inscrito_id>/', JulgamentoFantasyView.as_view(), name='julgamento_fantasy'),
+    #path('julgamento_makeyourself/', julgamento_makeyourself, name='julgamento_makeyourself'),
+    
     # urls para CBVs Jurados
     path('criar_jurado/', JuradosCreateView.as_view(), name='criar_jurado'),
     path('listar_jurados/', JuradosListView.as_view(), name='listar_jurados'),
@@ -27,7 +40,4 @@ urlpatterns = [
     path('listar_apoiadores/', ApoiadoresListView.as_view(), name='listar_apoiadores'),
     path('editar_apoiador/<int:pk>/', ApoiadoresUpdateView.as_view(), name='editar_apoiador'),
     path('deletar_apoiador/<int:pk>/', ApoiadoresDeleteView.as_view(), name='deletar_apoiador'),
-    path('julgamento/', julgamento, name='julgamento'),
-    path('julgamento_fantasy/', julgamento_fantasy, name='julgamento_fantasy'),
-    path('julgamento_makeyourself/', julgamento_makeyourself, name='julgamento_makeyourself'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

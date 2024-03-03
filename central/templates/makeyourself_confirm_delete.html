@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block main %}
+    <div class="ms-5 mx-5 bg-light rounded my-5">
+        <div class="text-center py-4">
+            <h2>Tem certeza que deseja exluir essa inscrição ?</h2>
+            <form action="{% url 'central:deletar_makeyourself' inscrito.pk %}" method="post">
+                {% csrf_token %}
+                <p>Nome: {{inscrito.nome_completo}}</p>
+                <p>Email: {{inscrito.personagem }}</p>
+                <input type="submit" class="btn btn-danger" value="Sim, excluir">
+                <a href="{% url 'central:inscritos_makeyourself' %}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

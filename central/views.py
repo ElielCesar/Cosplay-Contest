@@ -1,14 +1,18 @@
+from typing import Any
 from django.contrib.auth.decorators import login_required
+from django.db.models.query import QuerySet
 from .forms import *
 from .models import *
 from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.shortcuts import get_object_or_404, redirect
 
 # esse bloco vai ser utilizado para as CBVs
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
 
 
 """ Classes de CRUD para Jurados"""
@@ -102,7 +106,6 @@ class ApoiadoresCreateView(LoginRequiredMixin, CreateView):
     template_name = 'apoiador_form.html'
     success_url = '/home/listar_apoiadores/'
 
-    # em CBVs é assim que devem ser passadas as mensagens
     def form_valid(self, form):
         response = super().form_valid(form)
         messages.success(self.request, 'Apoiador cadastrado com sucesso!')
@@ -138,101 +141,138 @@ class ApoiadoresDeleteView(LoginRequiredMixin, DeleteView):
         return context
 
 
-@login_required
-def julgamento(request):
-    if request.method == 'GET':
-        return render(request, 'julgamento.html')
-    return render(request, 'julgamento.html')
+class InscreverView(LoginRequiredMixin, TemplateView):
+    template_name = 'inscrever.html'
 
 
-@login_required
-def julgamento_fantasy(request):
-    form = FilterForm(request.GET)
-    inscritos_fantasy = Fantasy.objects.all()
-
-    if request.method == 'GET':
-        if form.is_valid():
-            nome_completo_inicia_com = form.cleaned_data.get(
-                'nome_completo_inicia_com')
-            if nome_completo_inicia_com:
-                inscritos_fantasy = inscritos_fantasy.filter(
-                    nome_completo__startswith=nome_completo_inicia_com)
-    return render(request, 'julgamento_fantasy.html', {'inscritos_fantasy': inscritos_fantasy, 'form': form})
+class JulgamentoView(LoginRequiredMixin, TemplateView):
+    template_name = 'julgamento.html'
 
 
-@login_required
-def julgamento_makeyourself(request):
-    if request.method == 'GET':
-        return render(request, 'julgamento_makeyourself.html')
-    return render(request, 'julgamento_makeyourself.html')
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'home.html'
 
 
-# Create your views here.
-@login_required(login_url='/auth/login/')
-def home(request):
-    if request.method == 'GET':
-        return render(request, 'home.html')
+""" Classes de CRUD para inscritos na categoria Fantasy """
+class InscreverFantasyView(LoginRequiredMixin, CreateView):
+    model = Fantasy
+    form_class = Fantasy_ModelForm
+    template_name = 'fantasy_form.html'
+    success_url = '/home/inscritos_fantasy/'
+    
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        response = super().form_valid(form)
+        messages.success(self.request, 'Inscrito com sucesso na categoria Fantasy!')
+        return response
 
 
-@login_required
-def inscrever(request):
-    if request.method == 'GET':
-        return render(request, 'inscrever.html')
+class InscritosFantasyView(LoginRequiredMixin, ListView):
+    model = Fantasy
+    template_name = 'inscritos_fantasy.html'
+    context_object_name = 'inscritos_fantasy'
+    
+    def get_queryset(self):
+        queryset = super().get_queryset() 
+        nome_completo_inicia_com = self.request.GET.get('nome_completo_inicia_com', '')
+        
+        if nome_completo_inicia_com:
+            queryset = queryset.filter(nome_completo__startswith=nome_completo_inicia_com)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = FilterForm(self.request.GET or None)
+        return context
 
 
-@login_required
-def inscrever_fantasy(request):
-    if request.method == 'GET':
-        formulario = Fantasy_ModelForm()
-        return render(request, 'inscrever_fantasy.html', {'formulario': formulario})
+class DeletarFantasyView(LoginRequiredMixin, DeleteView):
+    model = Fantasy
+    template_name = 'fantasy_confirm_delete.html'
+    success_url = '/home/inscritos_fantasy/'
 
-    elif request.method == 'POST':
-        formulario = Fantasy_ModelForm(request.POST, request.FILES)
-        if formulario.is_valid():
-            fantasy = formulario.save(commit=False)
-            fantasy.usuario = request.user
-            fantasy.save()
-            formulario = Fantasy_ModelForm()
-            messages.add_message(
-                request, constants.SUCCESS, 'Usuário inscrito com sucesso na categoria Fantasy!')
-            return render(request, 'inscrever_fantasy.html', {'formulario': formulario})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['inscrito'] = self.get_object()
+        return context
+
+
+""" Classes de CRUD para inscritos na categoria Make Your Self """
+class InscreverMakeYourSelfView(LoginRequiredMixin, CreateView):
+    model = MakeYourSelf
+    form_class = Makeyourself_ModelForm
+    template_name = 'makeyourself_form.html'
+    success_url = '/home/inscritos_makeyourself/'
+    
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        response = super().form_valid(form)
+        messages.success(self.request, 'Inscrito com sucesso na categoria Make Your Self!')
+        return response
+
+
+class InscritosMakeYourSelfView(LoginRequiredMixin, ListView):
+    model = MakeYourSelf
+    template_name = 'inscritos_makeyourself.html'
+    context_object_name = 'inscritos_makeyourself'
+    
+    def get_queryset(self):
+        queryset = super().get_queryset() 
+        nome_completo_inicia_com = self.request.GET.get('nome_completo_inicia_com', '')
+        
+        if nome_completo_inicia_com:
+            queryset = queryset.filter(nome_completo__startswith=nome_completo_inicia_com)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) 
+        context['form'] = FilterForm(self.request.GET or None)
+        return context
+
+
+class DeletarMakeYourSelfView(LoginRequiredMixin, DeleteView):
+    model = MakeYourSelf
+    template_name = 'makeyourself_confirm_delete.html'
+    success_url = '/home/inscritos_makeyourself/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['inscrito'] = self.get_object()
+        return context
+
+
+""" Classe de CRUD para Julgamento na categoria Fantasy"""
+class JulgamentoFantasyView(LoginRequiredMixin,CreateView):
+    model = Julgamento
+    form_class = Julgamento_Fantasy_ModelForm
+    template_name = 'avaliar_fantasy_form.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        inscrito_id = self.kwargs.get('inscrito_id')
+        context['inscrito'] = get_object_or_404(Fantasy, pk=inscrito_id)
+        # verificar se esse jurado já avaliou o candidato
+        avaliacao_existente = Julgamento.objects.filter(participante_fantasy=inscrito_id, jurado=self.request.user).first()
+        if avaliacao_existente:
+            context['form'] = self.form_class(instance=avaliacao_existente)
+        return context
+    
+    def form_valid(self, form):
+        inscrito_id = self.kwargs.get('inscrito_id')
+        
+        avaliacao_existente = Julgamento.objects.filter(
+            participante_fantasy_id=inscrito_id,
+            jurado=self.request.user).first()
+        
+        if avaliacao_existente:
+            form = self.form_class(self.request.POST, instance=avaliacao_existente)
+        
         else:
-            return render(request, 'inscrever_fantasy.html', {'formulario': formulario})
+            form.instance.jurado = self.request.user
+            form.instance.participante_fantasy = get_object_or_404(Fantasy, pk=inscrito_id)
+            
+        form.save()
+        messages.success(self.request, 'Sua avaliacão foi salva com sucesso!')
+        return redirect('/home/inscritos_fantasy/')
 
-
-@login_required
-def inscrever_makeyourself(request):
-    if request.method == 'GET':
-        formulario = Makeyourself_ModelForm()
-        return render(request, 'inscrever_makeyourself.html', {'formulario': formulario})
-
-    elif request.method == 'POST':
-        formulario = Makeyourself_ModelForm(request.POST, request.FILES)
-        if formulario.is_valid():
-            fantasy = formulario.save(commit=False)
-            fantasy.usuario = request.user
-            fantasy.save()
-            formulario = Makeyourself_ModelForm()
-            messages.add_message(
-                request, constants.SUCCESS, 'Usuário inscrito com sucesso na categoria Make Your Self!')
-            return render(request, 'inscrever_makeyourself.html', {'formulario': formulario})
-        else:
-            return render(request, 'inscrever_makeyourself.html', {'formulario': formulario})
-
-
-@login_required
-def buscar_inscritos(request):
-    form = FilterForm(request.GET)
-    inscritos_fantasy = Fantasy.objects.all()
-    inscritos_make = MakeYourSelf.objects.all()
-
-    if request.method == 'GET':
-        if form.is_valid():
-            nome_completo_inicia_com = form.cleaned_data.get(
-                'nome_completo_inicia_com')
-            if nome_completo_inicia_com:
-                inscritos_fantasy = inscritos_fantasy.filter(
-                    nome_completo__startswith=nome_completo_inicia_com)
-                inscritos_make = inscritos_make.filter(
-                    nome_completo__startswith=nome_completo_inicia_com)
-    return render(request, 'inscritos.html', {'inscritos_fantasy': inscritos_fantasy, 'inscritos_make': inscritos_make, 'form': form})
+ 

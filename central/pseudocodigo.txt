@@ -1,0 +1,25 @@
+1 crie uma CBV para julgamento exclusivo da categ. Makeyourself 
+
+2 a classe deve ter 3 atributos principais:
+- model onde o objeto será criado / atualizado / deletado
+- form_class que vai renderizar o formulário para o model
+- template_name que vai exibir o formulário form_class 
+
+3 para passar objetos via contexto crie get_context_data()
+- obtenha e armazene o contexto da super() 
+- pegue o id do inscrito com self.kwargs
+- adicione o inscrito no contexto 
+- verifique se já foi avaliado
+- se sim retorne dos dados do form_class para o contexto 
+- retorne a variavel de contexto 
+
+4 sobrescreva o metodo form_valid()
+- pegue o inscrito id com self.kwargs
+- verifique e armazene se já foi avaliado pelo jurado em questão
+- se sim atualiza a avaliacao existente
+- se não pegue o jurado do request e o participante e salve no formulario 
+- save o formulario form.save()
+
+5 adicione uma mensagem de sucesso e redirecione para a página desejada
+
+

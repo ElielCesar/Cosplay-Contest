@@ -8,10 +8,16 @@
         {% endfor %}
     {% endif %}
 
-    <form action="{% url 'central:inscrever_fantasy'%}" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{formulario.as_p}}
-        <button class="btn btn-primary my-4 w-100">Salvar</button>
+        {{form.as_p}}
+        <button class="btn btn-primary my-4 w-100">
+            {% if form.instance.pk %}
+                Atualizar
+            {% else %}
+                Salvar
+            {% endif %}
+        </button>
     </form>
 </div>
 

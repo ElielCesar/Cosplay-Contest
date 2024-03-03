@@ -58,8 +58,20 @@ class Apoiadores_ModelForm(forms.ModelForm):
 
 # formulários de filtragem
 class FilterForm(forms.Form):
-    nome_completo_inicia_com = forms.CharField(
+        nome_completo_inicia_com = forms.CharField(
         required=False,
         label='Nome completo inicia com',
         widget=forms.TextInput(attrs={'class':'form-control w-100', 'placeholder':'Digite um nome para pesquisa...'}),
     )
+    
+class Julgamento_Fantasy_ModelForm(forms.ModelForm):
+    class Meta:
+        model = Julgamento
+        fields = ['nota_estetica', 'nota_criatividade', 'nota_performance', 'nota_sustentabilidade', 'observacao']
+        widgets = {
+            'nota_estetica':forms.NumberInput(attrs={'class':'form-control'}),
+            'nota_criatividade':forms.NumberInput(attrs={'class':'form-control'}),
+            'nota_performance':forms.NumberInput(attrs={'class':'form-control'}),
+            'nota_sustentabilidade':forms.NumberInput(attrs={'class':'form-control'}),
+            'observacao':forms.TextInput(attrs={'class':'form-control'}),
+        }

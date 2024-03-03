@@ -50,15 +50,16 @@ class Apoiadores(models.Model):
     
     
 class Julgamento(models.Model):
-    participante = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False, related_name='participacoes')
+    participante_fantasy = models.ForeignKey(Fantasy, on_delete=models.CASCADE, blank=True, null=True, related_name='julgamentos_fantasy')
     jurado = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False, related_name='julgamentos')
     nota_estetica = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
-    nota_criatidade = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
+    nota_criatividade = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
     nota_performance = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
     nota_sustentabilidade = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
-    nota_final = models.IntegerField(validators = [MaxValueValidator(50), MinValueValidator(4)])
     observacao = models.CharField(max_length=500, blank=True, null=True)
     
-    
+    @property
+    def nota_final(self):
+        return self.nota_estetica, self.nota_criatidade, self.nota_performance + self.nota_sustentabilidade
     
     
