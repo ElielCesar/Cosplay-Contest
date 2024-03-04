@@ -62,4 +62,16 @@ class Julgamento(models.Model):
     def nota_final(self):
         return self.nota_estetica, self.nota_criatidade, self.nota_performance + self.nota_sustentabilidade
     
+
+class Julgamento_MakeYourSelf(models.Model):
+    participante_makeyourself = models.ForeignKey(MakeYourSelf, on_delete=models.CASCADE, blank=True, null=True, related_name='julgamentos_makeyourself')
+    jurado = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False, related_name='julgamentos_makeyourself')
+    nota_estetica = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
+    nota_criatividade = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
+    nota_performance = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
+    nota_sustentabilidade = models.IntegerField(validators = [MaxValueValidator(10), MinValueValidator(1)])
+    observacao = models.CharField(max_length=500, blank=True, null=True)
     
+    @property
+    def nota_final(self):
+        return self.nota_estetica, self.nota_criatidade, self.nota_performance + self.nota_sustentabilidade

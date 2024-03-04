@@ -1,6 +1,8 @@
 from typing import Any
 from django.contrib.auth.decorators import login_required
 from django.db.models.query import QuerySet
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from .forms import *
 from .models import *
 from django.shortcuts import render
@@ -241,7 +243,7 @@ class DeletarMakeYourSelfView(LoginRequiredMixin, DeleteView):
         return context
 
 
-""" Classe de CRUD para Julgamento na categoria Fantasy"""
+""" Classe Create e Update para Julgamento na categoria Fantasy"""
 class JulgamentoFantasyView(LoginRequiredMixin,CreateView):
     model = Julgamento
     form_class = Julgamento_Fantasy_ModelForm
@@ -275,4 +277,37 @@ class JulgamentoFantasyView(LoginRequiredMixin,CreateView):
         messages.success(self.request, 'Sua avaliacão foi salva com sucesso!')
         return redirect('/home/inscritos_fantasy/')
 
- 
+
+""" Classe Create e Update para Julgamento na categoria Makeyourself"""
+class JulgamentoMakeYourSelfView(LoginRequiredMixin, CreateView):
+    model = Julgamento_MakeYourSelf
+    form_class = Julgamento_Makeyourself_ModelForm
+    template_name = 'avaliar_makeyourself_form.html'
+    
+    # passar objetos via contexto
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        id_inscrito = self.kwargs.get('inscrito_id') # vem da urls
+        context['inscrito'] = get_object_or_404(MakeYourSelf, pk=id_inscrito)
+        
+        avaliacao_existente = Julgamento_MakeYourSelf.objects.filter(participante_makeyourself=id_inscrito, jurado=self.request.user).first()
+        
+        if avaliacao_existente:
+            context['form'] = self.form_class(instance=avaliacao_existente)
+        return context
+    
+    def form_valid(self, form):
+        id_inscrito = self.kwargs.get('inscrito_id')
+        
+        avaliacao_existente = Julgamento_MakeYourSelf.objects.filter(participante_makeyourself=id_inscrito, jurado=self.request.user).first()
+
+        if avaliacao_existente:
+            form = self.form_class(self.request.POST, instance=avaliacao_existente)
+            
+        else:
+            form.instance.jurado = self.request.user 
+            form.instance.participante_makeyourself = get_object_or_404(MakeYourSelf, pk=id_inscrito)
+        
+        form.save()
+        messages.success(self.request, 'Avaliacão salva com sucesso!')
+        return redirect ('/home/inscritos_makeyourself/')

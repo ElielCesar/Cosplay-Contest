@@ -21,7 +21,7 @@ urlpatterns = [
     # urls para Julgamento
     path('julgamento/', JulgamentoView.as_view(), name='julgamento'),
     path('julgamento_fantasy/<int:inscrito_id>/', JulgamentoFantasyView.as_view(), name='julgamento_fantasy'),
-    #path('julgamento_makeyourself/', julgamento_makeyourself, name='julgamento_makeyourself'),
+    path('julgamento_makeyourself/<int:inscrito_id>/', JulgamentoMakeYourSelfView.as_view(), name='julgamento_makeyourself'),
     
     # urls para CBVs Jurados
     path('criar_jurado/', JuradosCreateView.as_view(), name='criar_jurado'),
