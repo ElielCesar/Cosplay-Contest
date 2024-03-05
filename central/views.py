@@ -1,14 +1,10 @@
 from typing import Any
-from django.contrib.auth.decorators import login_required
 from django.db.models.query import QuerySet
-from django.forms import BaseModelForm
-from django.http import HttpResponse
 from .forms import *
 from .models import *
-from django.shortcuts import render
 from django.contrib import messages
-from django.contrib.messages import constants
 from django.shortcuts import get_object_or_404, redirect
+from django.db.models import Sum, F
 
 # esse bloco vai ser utilizado para as CBVs
 from django.views.generic import ListView
@@ -141,18 +137,6 @@ class ApoiadoresDeleteView(LoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['apoiador'] = self.get_object()
         return context
-
-
-class InscreverView(LoginRequiredMixin, TemplateView):
-    template_name = 'inscrever.html'
-
-
-class JulgamentoView(LoginRequiredMixin, TemplateView):
-    template_name = 'julgamento.html'
-
-
-class HomeView(LoginRequiredMixin, TemplateView):
-    template_name = 'home.html'
 
 
 """ Classes de CRUD para inscritos na categoria Fantasy """
@@ -311,3 +295,58 @@ class JulgamentoMakeYourSelfView(LoginRequiredMixin, CreateView):
         form.save()
         messages.success(self.request, 'Avaliacão salva com sucesso!')
         return redirect ('/home/inscritos_makeyourself/')
+
+
+""" Views Genéricas """
+class InscreverView(LoginRequiredMixin, TemplateView):
+    template_name = 'inscrever.html'
+
+
+class RankingFantasyView(ListView):
+    model = Fantasy
+    template_name = 'ranking.html'
+    context_object_name = 'participantes'
+
+    def get_queryset(self):
+       queryset = Fantasy.objects.annotate(
+           total_nota_criatividade = Sum('julgamentos_fantasy__nota_criatividade'),
+           total_nota_estetica = Sum('julgamentos_fantasy__nota_estetica'),
+           total_nota_performance = Sum('julgamentos_fantasy__nota_performance'),
+           total_nota_sustentabilidade = Sum('julgamentos_fantasy__nota_sustentabilidade'),
+           
+           # calcula nota final agregada como uma anotacao
+           nota_final_agregada=Sum(
+                F('julgamentos_fantasy__nota_criatividade') +
+                F('julgamentos_fantasy__nota_estetica') +
+                F('julgamentos_fantasy__nota_performance') +
+                F('julgamentos_fantasy__nota_sustentabilidade')
+           )
+       ).order_by('-nota_final_agregada')
+       return queryset
+
+class RankingMakeYourSelfView(ListView):
+    model = MakeYourSelf
+    template_name = 'ranking_makeyourself.html'
+    context_object_name = 'participantes'
+
+    def get_queryset(self):
+       queryset = MakeYourSelf.objects.annotate(
+           total_nota_criatividade = Sum('julgamentos_makeyourself__nota_criatividade'),
+           total_nota_estetica = Sum('julgamentos_makeyourself__nota_estetica'),
+           total_nota_performance = Sum('julgamentos_makeyourself__nota_performance'),
+           total_nota_sustentabilidade = Sum('julgamentos_makeyourself__nota_sustentabilidade'),
+           
+           # calcula nota final agregada como uma anotacao
+           nota_final_agregada=Sum(
+                F('julgamentos_makeyourself__nota_criatividade') +
+                F('julgamentos_makeyourself__nota_estetica') +
+                F('julgamentos_makeyourself__nota_performance') +
+                F('julgamentos_makeyourself__nota_sustentabilidade')
+           )
+       ).order_by('-nota_final_agregada')
+       return queryset
+    
+
+
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = 'home.html'

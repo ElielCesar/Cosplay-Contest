@@ -16,7 +16,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            height: 110vh;
+            height: 500vh;
             width: 250px;
             background-color: white;
             padding: 0.4rem 0.8rem;
@@ -68,16 +68,17 @@
         }
 
         .lista-master ul > li{
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
     </style>
 </head>
 
 <body class="container-fluid" style="background-color:#271c6efb;">
+    
 
     <div class="row">
-        <div class="col-2">
+        <div class="col-4 col-md-4 col-sm-4">
             <div class="sidebar">
                 <div class="topo-sidebar">
                     <div class="topo-filha" id="logo-sistema">
@@ -92,7 +93,7 @@
                 </div>
                 <div>
                     <button class="btn btn-dark w-100">
-                        <i class="bi bi-person-fill"></i><span id="usuario-tag">Usuário</span>
+                        <i class="bi bi-person-fill"></i><span id="usuario-tag">&nbsp;{{request.user}}</span>
                     </button> 
                 </div>
                 <!--agora vem a lista principal a sidebar-->
@@ -104,20 +105,26 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'central:inscritos_fantasy' %}" class="btn btn-outline-primary w-100">
+                            <a href="{% url 'central:inscritos_fantasy' %}" class="btn btn-outline-primary shadow w-100">
                                 <i class="bi bi-window-fullscreen"></i>&nbsp;&nbsp;Inscritos Fantasy
                             </a>
                         </li>
 
                         <li>
-                            <a href="{% url 'central:inscritos_makeyourself' %}" class="btn btn-outline-primary w-100">
+                            <a  class="btn btn-outline-primary w-100" href="{% url 'central:ranking_fantasy' %}">
+                            <i class="bi bi-clipboard-data"></i>&nbsp;&nbsp;Ranking Fantasy
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'central:inscritos_makeyourself' %}" class="btn btn-outline-primary shadow w-100">
                                 <i class="bi bi-window-fullscreen"></i>&nbsp;&nbsp;Inscritos Make Your Self
                             </a>
                         </li>
 
                         <li>
-                            <a  class="btn btn-outline-primary w-100" href="{% url 'central:julgamento' %}">
-                            <i class="bi bi-clipboard-data"></i>&nbsp;&nbsp;Julgamento
+                            <a  class="btn btn-outline-primary w-100" href="{% url 'central:ranking_makeyourself' %}">
+                            <i class="bi bi-clipboard-data"></i>&nbsp;&nbsp;Ranking Make Your Self
                             </a>
                         </li>
 
@@ -157,10 +164,9 @@
             </div>
         </div>
 
-        <div class="col-10">
+        <div class="col-10 col-md-8 col-sm-8">
             {% block main %}
             
-            <!--Aqui via o conteudo-->
             
             {%endblock%}
         </div>

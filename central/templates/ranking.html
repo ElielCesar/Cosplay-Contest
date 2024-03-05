@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}Ranking{%endblock%}
+
+{% block main %}
+
+<div class="container my-5 bg-light rounded" style="width: 100vw;">
+  <h3 class="text-center py-4">Resultado Categoria - Fantasy </h3>
+  <hr class="text-dark">
+  <table class="table" id="rankingTable">
+    <thead>
+      <tr>
+        <th scope="col">Participante</th>
+        <th scope="col">Criatividade</th>
+        <th scope="col">Estetica</th>
+        <th scope="col">Performance</th>
+        <th scope="col">Sustentabilidade</th>
+        <th scope="col">Nota Final</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for participante in participantes %}
+        <tr>
+          <td>{{ participante.nome_completo }}</td>
+          <td>{{ participante.total_nota_criatividade }}</td>
+          <td>{{ participante.total_nota_estetica }}</td>
+          <td>{{ participante.total_nota_performance }}</td>
+          <td>{{ participante.total_nota_sustentabilidade }}</td>
+          <td>{{ participante.nota_final_agregada }}</td> 
+        </tr>
+      {% endfor %}
+    </tbody>
+    
+  </table>
+</div>
+{% endblock %}

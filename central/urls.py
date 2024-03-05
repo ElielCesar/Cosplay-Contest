@@ -19,7 +19,6 @@ urlpatterns = [
     path('deletar_makeyourself/<int:pk>/',DeletarMakeYourSelfView.as_view() ,name='deletar_makeyourself'),
     
     # urls para Julgamento
-    path('julgamento/', JulgamentoView.as_view(), name='julgamento'),
     path('julgamento_fantasy/<int:inscrito_id>/', JulgamentoFantasyView.as_view(), name='julgamento_fantasy'),
     path('julgamento_makeyourself/<int:inscrito_id>/', JulgamentoMakeYourSelfView.as_view(), name='julgamento_makeyourself'),
     
@@ -40,4 +39,7 @@ urlpatterns = [
     path('listar_apoiadores/', ApoiadoresListView.as_view(), name='listar_apoiadores'),
     path('editar_apoiador/<int:pk>/', ApoiadoresUpdateView.as_view(), name='editar_apoiador'),
     path('deletar_apoiador/<int:pk>/', ApoiadoresDeleteView.as_view(), name='deletar_apoiador'),
+    
+    path('ranking/fantasy/', RankingFantasyView.as_view(), name='ranking_fantasy'),
+    path('ranking/makeyourself/', RankingMakeYourSelfView.as_view(), name='ranking_makeyourself'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
