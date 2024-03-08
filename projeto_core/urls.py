@@ -9,6 +9,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [path("__debug__/", include("debug_toolbar.urls")),]
+
 admin.site.site_header = 'Cosplay Contest'  
 # Nome que aparece no titulo da aba do navegador
 admin.site.site_title = 'Cosplay Contest'  

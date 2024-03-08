@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title %}{%endblock%}</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <!--
+    <style>
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 500vh;
+            width: 250px;
+            background-color: white;
+            padding: 0.4rem 0.8rem;
+            transition: all 0.5s ease;
+        }
+
+        /* inicio - configura topo da sidebar*/
+        .topo-sidebar {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .topo-sidebar img {
+            width: 50px;
+            height: auto;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        .topo-sidebar span {
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        .topo-sidebar .topo-filha {
+            margin: 7px;
+        }
+
+        .sidebar .topo-sidebar hr {
+            border-color: black;
+            line-height: 50px;
+            height: 10px;
+           
+        }
+        /* fim - configura topo da sidebar*/
+
+        .lista-master {
+            margin-top: 10px;
+            display: block;
+        }
+
+        .lista-master ul{
+            padding-left: 0px;
+            margin-left: 3px;
+            font-size: large;
+            text-decoration: none;
+            list-style-type: none;
+        }
+
+        .lista-master ul > li{
+            margin-bottom: 20px;
+        }
+
+    </style> -->
+</head>
+
+<body class="container-fluid" style="background-color:#271c6efb;">
+
+            <!--Container Main end-->
+            <!--
+            <div class="sidebar">
+                <div class="topo-sidebar">
+                    <div class="topo-filha" id="logo-sistema">
+                        <img src="{% static 'img/logo_sistema.png'%}">
+                    </div>
+                    <div class="topo-filha" id="nome-sistema">
+                        <span>Cosplay Contest</span>
+                    </div>
+                </div>
+                <div class="topo-filha">
+                    <hr>
+                </div>
+                <div>
+                    <button class="btn btn-dark w-100">
+                        <i class="bi bi-person-fill"></i><span id="usuario-tag">&nbsp;{{request.user}}</span>
+                    </button> 
+                </div>
+
+                <div class="lista-master">
+                    <ul>
+                        <li>
+                            <a href="{% url 'central:inscrever'%}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Inscrever-se
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'central:inscritos_fantasy' %}" class="btn btn-outline-primary shadow w-100">
+                                <i class="bi bi-window-fullscreen"></i>&nbsp;&nbsp;Inscritos Fantasy
+                            </a>
+                        </li>
+
+                        <li>
+                            <a  class="btn btn-outline-primary w-100" href="{% url 'central:ranking_fantasy' %}">
+                            <i class="bi bi-clipboard-data"></i>&nbsp;&nbsp;Ranking Fantasy
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{% url 'central:inscritos_makeyourself' %}" class="btn btn-outline-primary shadow w-100">
+                                <i class="bi bi-window-fullscreen"></i>&nbsp;&nbsp;Inscritos Make Your Self
+                            </a>
+                        </li>
+
+                        <li>
+                            <a  class="btn btn-outline-primary w-100" href="{% url 'central:ranking_makeyourself' %}">
+                            <i class="bi bi-clipboard-data"></i>&nbsp;&nbsp;Ranking Make Your Self
+                            </a>
+                        </li>
+
+                        <li >
+                            <a class="btn btn-outline-primary w-100" href="{% url 'central:listar_jurados' %}">
+                                <i class="bi bi-person-badge"></i>&nbsp;&nbsp;Jurados
+                            </a>                        
+                        </li>
+                            
+                        <li >
+                            <a class="btn btn-outline-primary w-100" href="{% url 'central:listar_organizadores' %}">
+                                <i class="bi bi-person-vcard"></i>&nbsp;&nbsp;Organizadores
+                            </a>
+                        </li>
+
+                        <li >
+                            <a class="btn btn-outline-primary w-100" href="{% url 'central:listar_apoiadores' %}">
+                                <i class="bi bi-chat-heart"></i>&nbsp;&nbsp;Apoiadores
+                            </a>
+                        </li>
+
+                        <li >
+                            <a class="btn btn-outline-primary w-100" href="#">
+                                <i class="bi bi-award"></i>&nbsp;&nbsp;Certificados
+  
+                            </a>                      
+                        </li>
+
+                        <li>
+                            <a class="btn btn-outline-primary w-100" href="{% url 'autenticacao:logout'%}" style="text-decoration:none">
+                                <i class="bi bi-door-closed"></i>&nbsp;&nbsp;Sair
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+                -->
+
+                
+
+        <div class="col-10 col-md-8 col-sm-8">
+            {% block main %}
+            
+            
+            {%endblock%}
+        </div>
+    </div>
+    <script src="{% static 'js/script.js'%}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
