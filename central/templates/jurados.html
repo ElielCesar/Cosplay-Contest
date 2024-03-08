@@ -23,9 +23,11 @@
                 {% endfor %}
             {% endif %}
         </div>
+        {% if request.user|esta_no_grupo:"administradores"%}
         <div>
             <a class="btn btn-primary" href="{% url 'central:criar_jurado' %}">Adicionar jurado</a>
         </div>
+        {% endif %}
         
         <div class="row">
             {% for jurado in jurados %}
