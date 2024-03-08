@@ -39,4 +39,4 @@ O sistema apresenta um layout simples com interface web, permitindo uma fácil p
     9 - Caso o usuário esqueca sua senha, ele deve entrar em contato com o administrador do sistema para que ela seja resetada.
 ---
 
-Para mais informações ou dúvidas sobre o sistema, sinta-se à vontade para abrir uma issue ou enviar uma mensagem.
+Para mais informações ou dúvidas sobre o sistema, sinta-se à vontade para abrir uma issue ou enviar uma mensagem para eliel.tecinfo@gmail.com
